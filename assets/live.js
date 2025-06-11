@@ -1,3 +1,4 @@
+
 (function() {
         var f = this;
         function g(a, b) {
@@ -22,13 +23,22 @@
         function k(a, b, c, d, e) {
             b ? (b = p(a, c),
             b.setAttribute("src", e),
-            a.body.appendChild(b)) : c ? a.write('<script src="' + e + '" nonce="' + c + '">\x3c/script>') : a.write('<script src="' + e + '">\x3c/script>');
+            a.body.appendChild(b)) : c ? (b = p(a, c),
+            b.setAttribute("src", e),
+            a.body.appendChild(b)) : (b = a.createElement("script"),
+            b.setAttribute("src", e),
+            a.body.appendChild(b));
             d()
         }
         function q(a, b, c, d, e) {
             b ? (a = p(a, c),
             a.innerHTML = e,
-            d.push(a)) : c ? a.write('<script nonce="' + c + '">' + e + "\x3c/script>") : a.write("<script>" + e + "\x3c/script>")
+            d.push(a)) : c ? (b = a.createElement("script"),
+            b.setAttribute("nonce", c),
+            b.text = e,
+            a.body.appendChild(b)) : (b = a.createElement("script"),
+            b.text = e,
+            a.body.appendChild(b))
         }
         function p(a, b) {
             a = a.createElement("script");
@@ -72,7 +82,7 @@
             b.initializeOrRedirect = function(c) {
                 var d = g("ytcsi.tick", b);
                 d && d("js_r");
-                (d = g(a.initializerPath)) ? d(c) : b.location = ""
+                (d = g(a.initializerPath)) ? d(c) : b.location = "https://web.archive.org/web/20170707163722/http://www.youtube.com/error?src=404"
             }
             ;
             c.load_steel_api && m(d + "/api-compiled.js");
