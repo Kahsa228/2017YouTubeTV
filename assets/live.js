@@ -1,146 +1,177 @@
 
-    (function () {
-
-        var b = window.labels;
-
-        if (window.jstiming && window.jstiming.load) {
-            window.jstiming.load.tick("ld_s");
+(function() {
+        var f = this;
+        function g(a, b) {
+            a = a.split(".");
+            b = b || f;
+            for (var c; c = a.shift(); )
+                if (null != b[c])
+                    b = b[c];
+                else
+                    return null;
+            return b
         }
-
-        var c = window.devjs,
-            e = /[?&]debugjs=1/.exec(window.location.href),
-            f = /[?&]localPlayer=1/.exec(window.location.href),
-            g = /[?&]mediaDiagnostics=1/.exec(window.location.href),
-            h = window.local_label,
-            k = /[?&]reversePairingCode=/.exec(window.location.href),
-            l = /[?&]launch=preload/.exec(window.location.href),
-            m = /[?&]v=[\w+\/\-_=]+/.exec(window.location.href),
-            n = "Cobalt" === window.environment.browser,
-            p = ("Steel" === window.environment.browser || n) && !e && !c,
-            q = window.csp_nonce;
-
-        window.label = h || (b && b["default"]) || "assets";
-
-
-        var r = window.appRoot + window.label,
-            t,
-            u = false,
-            v = [];
-
-        window.resetTimeout = function () {
-            window.clearTimeout(t);
-            if (!u) {
-                t = window.setTimeout(function () {
-                    var a = "local:///web.archive.org/web/20160303220919/https://network_failure.html";
-                    if (n) {
-                        a = "h5vcc://network-failure?retry-url=" + encodeURIComponent(window.location.href.split("#")[0]);
-                    }
-                    window.location.replace(a);
-                }, 40000);
+        function h(a, b) {
+            var c = Array.prototype.slice.call(arguments, 1);
+            return function() {
+                var b = c.slice();
+                b.push.apply(b, arguments);
+                return a.apply(this, b)
             }
+        }
+        ;var yt = {};
+        function k(a, b, c, d, e) {
+            b ? (b = p(a, c),
+            b.setAttribute("src", e),
+            a.body.appendChild(b)) : c ? (b = p(a, c),
+            b.setAttribute("src", e),
+            a.body.appendChild(b)) : (b = a.createElement("script"),
+            b.setAttribute("src", e),
+            a.body.appendChild(b));
+            d()
+        }
+        function q(a, b, c, d, e) {
+            b ? (a = p(a, c),
+            a.innerHTML = e,
+            d.push(a)) : c ? (b = a.createElement("script"),
+            b.setAttribute("nonce", c),
+            b.text = e,
+            a.body.appendChild(b)) : (b = a.createElement("script"),
+            b.text = e,
+            a.body.appendChild(b))
+        }
+        function p(a, b) {
+            a = a.createElement("script");
+            b && a.setAttribute("nonce", b);
+            return a
+        }
+        function r(a, b) {
+            var c = a.createElement("link");
+            c.setAttribute("rel", "stylesheet");
+            c.setAttribute("type", "text/css");
+            c.setAttribute("href", b);
+            a.head.appendChild(c)
+        }
+        ;f.CLOSURE_UNCOMPILED_DEFINES = {
+            "bedrock.DEV_JS": !0
         };
-
-        if (p) {
-            window.resetTimeout();
-            window.applicationLoaded = function () {
-                u = true;
-                window.clearTimeout(t);
-            };
-        }
-
-        function loadScript(url) {
-            if (n) {
-                var script = document.createElement("script");
-                script.setAttribute("src", url);
-                if (q) script.setAttribute("nonce", q);
-                document.body.appendChild(script);
-            } else {
-                document.write(q ? `<script src="${url}" nonce="${q}"></script>` : `<script src="${url}"></script>`);
+        function t(a, b) {
+            b = void 0 === b ? f : b;
+            var c = b.loadParams;
+            b.label = function(b, a) {
+                return a ? a : b && b["default"] ? b["default"] : "unknown"
+            }(b.labels, c.label_requested);
+            var d = c.scs_path + b.label, e, l = !1, v = [], m = h(k, document, c.is_cobalt, c.csp_nonce, function() {
+                c.use_reset_logic && w("resetTimeout();")
+            }), w = h(q, document, c.is_cobalt, c.csp_nonce, v), C = h(r, document);
+            b.resetTimeout = function() {
+                b.clearTimeout(e);
+                l || (e = b.setTimeout(function() {
+                    var a = "local:///web.archive.org/web/20170707163722/https://network_failure.html";
+                    c.is_cobalt && (a = "h5vcc://network-failure?retry-url=" + encodeURIComponent(b.location.href.split("#")[0]));
+                    b.location.replace(a)
+                }, 4E4))
             }
-            if (p) injectScript("resetTimeout();");
-        }
-
-        function injectScript(content) {
-            if (n) {
-                var script = document.createElement("script");
-                if (q) script.setAttribute("nonce", q);
-                script.innerHTML = content;
-                v.push(script);
-            } else {
-                document.write(q ? `<script nonce="${q}">${content}</script>` : `<script>${content}</script>`);
+            ;
+            c.use_reset_logic && (b.resetTimeout(),
+            b.applicationLoaded = function() {
+                l = !0;
+                b.clearTimeout(e)
             }
-        }
-
-        function loadStylesheet(url) {
-            var link = document.createElement("link");
-            link.setAttribute("rel", "stylesheet");
-            link.setAttribute("type", "text/css");
-            link.setAttribute("href", url);
-            document.head.appendChild(link);
-        }
-
-        window.initializeOrRedirect = function (url) {
-            window.jstiming.load.tick("js_r");
-            if (yt && yt.tv && yt.tv.initializer) {
-                yt.tv.initializer(url);
-            } else {
-                window.location = "https://web.archive.org/web/20160303220919/http://www.youtube.com/error?src=404";
+            );
+            b.initializeOrRedirect = function(c) {
+                var d = g("ytcsi.tick", b);
+                d && d("js_r");
+                (d = g(a.initializerPath)) ? d(c) : b.location = "https://web.archive.org/web/20170707163722/http://www.youtube.com/error?src=404"
             }
-        };
-        
-
-        if (f) {
-            window.environment.player_url = e || c
-                ? "/video/youtube/src/web/javascript/debug-tv-player-en_US.js"
-                : "/video/youtube/src/web/javascript/tv-player-en_US.js";
-        }
-
-        if (c || e) {
-            var z = "Google" === window.environment.brand && "Eureka" === window.environment.model;
-            if (c) {
-                window.CLOSURE_BASE_PATH = "/javascript/closure/";
-                window.loadStylesheets = function () {
-                    window.h5CssList.forEach(loadStylesheet);
-                };
-                loadScript(r + "/lasagna-parse.js");
-                loadScript(window.CLOSURE_BASE_PATH + "base.js");
-                loadScript(r + "/deps.js");
-                loadScript(r + "/js/base_initializer.js");
-                loadScript(z ? r + "/js/chromecast_initializer.js" : r + "/js/initializer.js");
-                loadScript(r + "/css-list.js");
-                injectScript("loadStylesheets();");
-            } else {
-                window.CLOSURE_NO_DEPS = true;
-                var cssPath = window.environment.tv_css || "/app-prod.css";
-                loadStylesheet(r + cssPath);
-                loadScript(z ? r + "/chromecast-concat-bundle.js" : r + "/app-concat-bundle.js");
+            ;
+            c.load_steel_api && m(d + "/api-compiled.js");
+            var n = a.prodCssOverride || c.tv_css;
+            c.debugjs ? (b.CLOSURE_NO_DEPS = !0,
+            n && C(d + n),
+            m(d + a.debugJsInitializer)) : c.devjs || (n && C(d + n),
+            m(d + (a.prodJsOverride || c.tv_binary)));
+            c.load_player && m(c.player_url);
+            b.checkBrokenLabel = function() {
+                "undefined" == typeof yt && c.label_requested && (b.location.href = b.location.href.replace(/([?&])label=[^&]+&?/, "$1stick=0&"))
             }
-        } else {
-            var cssPath = window.environment.tv_css || "/app-prod.css";
-            loadStylesheet(r + cssPath);
-            loadScript(r + window.environment.tv_binary);
-            if (k || l || m) loadScript(window.environment.player_url);
-        }
-
-        window.checkBrokenLabel = function () {
-            if (typeof yt === "undefined" && h) {
-                window.location.href = window.location.href.replace(/([?&])label=[^&]+&?/, "$1stick=0&");
+            ;
+            w("checkBrokenLabel()");
+            w("initializeOrRedirect('" + d + "');");
+            c.is_cobalt && (b.onload = function() {
+                for (var a = 0, b = v.length; a < b; ++a)
+                    document.body.appendChild(v[a])
             }
-        };
-
-        injectScript("checkBrokenLabel();");
-
-        if (g) {
-            loadScript(e || c ? r + "/modules/media-diagnostics-debug.js" : r + "/modules/media-diagnostics.js");
+            )
         }
-
-        injectScript(`initializeOrRedirect('${r}');`);
-
-        if (n) {
-            window.onload = function () {
-                for (var i = 0; i < v.length; i++) {
-                    document.body.appendChild(v[i]);
+        ;var u = /^\?/
+          , x = /^-?(?:|0|[1-9][0-9]*)(?:\.[0-9]*)?$/;
+        function y(a) {
+            if ("number" === typeof a)
+                return a;
+            if (a && "string" === typeof a && x.test(a))
+                return Number(a);
+            if ("string" === typeof a && "" === a.trim())
+                return a;
+            var b = String(a).toLowerCase();
+            return "true" === b || 1 == a ? !0 : "false" === b || 0 == a ? !1 : a
+        }
+        function z(a) {
+            var b = {};
+            if (a) {
+                a = a.replace(u, "");
+                a = a.split("&");
+                for (var c, d = 0, e = a.length; d < e; ++d) {
+                    c = a[d].split("=");
+                    var l = c.shift();
+                    c = y(c.join("="));
+                    c = "string" == typeof c ? decodeURIComponent(c) : c;
+                    b[l] = c
                 }
-            };
+            }
+            return b
         }
-    })();
+        ;var A = z(f.location.hash.replace(/#[^?]*\??/, ""));
+        if (A.theme && "cl" != A.theme) {
+            var B = (f.location.search || "") + "&" + (f.location.hash || "").replace(/#[^?]*\??/, "")
+              , D = "/tv"
+              , E = z(B)
+              , F = void 0;
+            F = void 0 === F ? !1 : F;
+            var G;
+            a: {
+                for (var H in E) {
+                    G = !1;
+                    break a
+                }
+                G = !0
+            }
+            if (!G) {
+                var I = -1 == D.indexOf("?") ? "?" : "&"
+                  , J = D
+                  , K = void 0 === F ? !1 : F
+                  , L = []
+                  , M = void 0 === K ? !1 : K;
+                M = void 0 === M ? !1 : M;
+                var N = {}, O;
+                for (O in E) {
+                    var P = E[O];
+                    "undefined" !== typeof P && null !== P && (M ? N[O] = y(P) : "" !== P && (N[O] = y(P || 0)))
+                }
+                for (var Q in N)
+                    L.push(encodeURIComponent(Q) + "=" + encodeURIComponent(N[Q]));
+                D = J + (I + L.join("&"))
+            }
+            f.location.assign(D)
+        } else {
+            var R = {
+                initializerPath: "yt.tv.initialize"
+            };
+            "Google" == f.environment.brand && "Eureka" == f.environment.model ? (R.devJsInitializerModule = "yt.tv.cast.initializeChromeless",
+            R.debugJsInitializer = "/chromecast-concat-bundle.js") : (R.devJsInitializerModule = "yt.tv.initializeKabuki",
+            R.debugJsInitializer = "/app-concat-bundle.js");
+            t(R, f)
+        }
+        ;
+    }
+    ).call(this);
