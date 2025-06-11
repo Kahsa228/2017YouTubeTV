@@ -1,4 +1,4 @@
-(function() {
+(function() {More
         var f = this;
         function g(a, b) {
             a = a.split(".");
